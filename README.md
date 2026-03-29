@@ -2,7 +2,7 @@
 
 A simple project for handling Lightning Network payments.
 
-<img src="https://github.com/user-attachments/assets/64953591-d9e8-4685-96db-0c16e0920804" width="639" />
+<img src="https://github.com/user-attachments/assets/6afd05aa-a511-4647-bb39-68488430304f" width="567" />
 
 ## Project Structure
 
