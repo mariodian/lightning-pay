@@ -2,12 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="style.css">
-
-      .note strong {
-        color: var(--accent);
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="hero">
@@ -178,19 +173,25 @@
       </div>
     </div>
 
-    <div class="note" style="margin-top:32px;">
-      <strong>🔑 Minimum Required Macaroon:</strong><br>
-      To use Lightning Pay, you need a macaroon with these permissions:<br>
-      <code>onchain:read address:read invoices:read address:write invoices:write</code><br>
-      Generate it with the command below and use the resulting macaroon in the widget config above.
+    <div class="note" style="margin-top: 32px">
+      <strong>🔑 Minimum Required Macaroon:</strong><br />
+      To use Lightning Pay, you need a macaroon with these permissions:<br />
+      <code
+        >onchain:read address:read invoices:read address:write
+        invoices:write</code
+      ><br />
+      Generate it with the command below and use the resulting macaroon in the
+      widget config above.
     </div>
 
-    <div class="code-panel" style="margin: 24px auto 0;">
+    <div class="code-panel" style="margin: 24px auto 0">
       <div class="code-header">
         <span>lncli bakemacaroon command</span>
         <button class="copy-code-btn" id="copy-macaroon-btn">Copy</button>
       </div>
-      <pre id="macaroon-cli-output" style="user-select: all;">lncli bakemacaroon onchain:read address:read invoices:read address:write invoices:write</pre>
+      <pre id="macaroon-cli-output" style="user-select: all">
+lncli bakemacaroon onchain:read address:read invoices:read address:write invoices:write</pre
+      >
     </div>
 
     <div class="note">
@@ -202,10 +203,14 @@
     </div>
     <script>
       // Copy macaroon CLI command
-      document.getElementById("copy-macaroon-btn").addEventListener("click", () => {
-        const cmd = document.getElementById("macaroon-cli-output").textContent;
+      document
+        .getElementById("copy-macaroon-btn")
+        .addEventListener("click", () => {
+          const cmd = document.getElementById(
+            "macaroon-cli-output",
+          ).textContent;
           copyToClipboard(cmd, "copy-macaroon-btn");
-      });
+        });
       // ── Inline config → widget renderer ─────────────────────────────────────────
       let currentScriptEl = null;
       let currentStyleEl = null;
@@ -270,17 +275,17 @@
         copyToClipboard(tag, "copy-code-btn");
       });
 
-        function copyToClipboard(text, btnId) {
-          navigator.clipboard.writeText(text).then(() => {
-            const btn = document.getElementById(btnId);
-            btn.textContent = "Copied!";
-            btn.style.color = "#22c55e";
-            setTimeout(() => {
-              btn.textContent = "Copy";
-              btn.style.color = "";
-            }, 1800);
-          });
-        }
+      function copyToClipboard(text, btnId) {
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = document.getElementById(btnId);
+          btn.textContent = "Copied!";
+          btn.style.color = "#22c55e";
+          setTimeout(() => {
+            btn.textContent = "Copy";
+            btn.style.color = "";
+          }, 1800);
+        });
+      }
 
       // Render on load with defaults (no macaroon = will show connection error only when Generate is clicked)
       renderWidget();
