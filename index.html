@@ -178,6 +178,21 @@
       </div>
     </div>
 
+    <div class="note" style="margin-top:32px;">
+      <strong>🔑 Minimum Required Macaroon:</strong><br>
+      To use Lightning Pay, you need a macaroon with these permissions:<br>
+      <code>onchain:read address:read invoices:read address:write invoices:write</code><br>
+      Generate it with the command below and use the resulting macaroon in the widget config above.
+    </div>
+
+    <div class="code-panel" style="margin: 24px auto 0;">
+      <div class="code-header">
+        <span>lncli bakemacaroon command</span>
+        <button class="copy-code-btn" id="copy-macaroon-btn">Copy</button>
+      </div>
+      <pre id="macaroon-cli-output" style="user-select: all;">lncli bakemacaroon onchain:read address:read invoices:read address:write invoices:write</pre>
+    </div>
+
     <div class="note">
       <strong>⚠ CORS & TLS:</strong> Your LND node must allow cross-origin
       requests from the page's origin. Add <code>--restcors=*</code> (or the
@@ -185,8 +200,12 @@
       API is accessible over HTTPS or from localhost. The macaroon is
       transmitted only to your own node — never to a third party.
     </div>
-
     <script>
+      // Copy macaroon CLI command
+      document.getElementById("copy-macaroon-btn").addEventListener("click", () => {
+        const cmd = document.getElementById("macaroon-cli-output").textContent;
+          copyToClipboard(cmd, "copy-macaroon-btn");
+      });
       // ── Inline config → widget renderer ─────────────────────────────────────────
       let currentScriptEl = null;
       let currentStyleEl = null;
@@ -247,17 +266,21 @@
 
       document.getElementById("copy-code-btn").addEventListener("click", () => {
         const paramStr = document.getElementById("params-display").textContent;
-        const tag = `<script src="lightning-pay.js${paramStr}"><\/script>`;
-        navigator.clipboard.writeText(tag).then(() => {
-          const btn = document.getElementById("copy-code-btn");
-          btn.textContent = "Copied!";
-          btn.style.color = "#22c55e";
-          setTimeout(() => {
-            btn.textContent = "Copy";
-            btn.style.color = "";
-          }, 1800);
-        });
+        const tag = `<script src=\"https://lightning-pay.mariodian.com/lightning-pay.js${paramStr}\"><\/script>`;
+        copyToClipboard(tag, "copy-code-btn");
       });
+
+        function copyToClipboard(text, btnId) {
+          navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById(btnId);
+            btn.textContent = "Copied!";
+            btn.style.color = "#22c55e";
+            setTimeout(() => {
+              btn.textContent = "Copy";
+              btn.style.color = "";
+            }, 1800);
+          });
+        }
 
       // Render on load with defaults (no macaroon = will show connection error only when Generate is clicked)
       renderWidget();
